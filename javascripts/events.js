@@ -22,8 +22,16 @@ const pressEnter = () => {
   });
 };
 
+const submitButton = () => {
+  $('#submit').on('click', () => {
+    weather.showResults();
+  });
+
+};
+
 const initializer = () => {
   pressEnter();
+  submitButton();
 };
 
 module.exports = {

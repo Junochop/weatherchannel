@@ -5,7 +5,7 @@ const domString = (weather) => {
   strang += `<div class="thumbnail">`;
   strang += `<img src="..." alt="...">`;
   strang += `<div class="caption">`;
-  strang += `<h3>${weather.main.pressure}</h3>`;
+  strang += `<h3>${weather.name}</h3>`;
   strang += `<p>${weather.main.humidity}</p>`;
 
   strang += `</div>`;
