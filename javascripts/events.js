@@ -18,13 +18,21 @@ const pressEnter = () => {
       // const searchZip = $('#searchBar').val().replace(' ', '%20');
 
       weather.showResults();
+      clickCard();
     }
+  });
+};
+
+const clickCard = () => {
+  $('body').on('click', '#myweather', () => {
+    weather.showFiveCast();
   });
 };
 
 const submitButton = () => {
   $('#submit').on('click', () => {
     weather.showResults();
+    clickCard();
   });
 
 };
@@ -32,6 +40,7 @@ const submitButton = () => {
 const initializer = () => {
   pressEnter();
   submitButton();
+
 };
 
 module.exports = {
