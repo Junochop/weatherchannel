@@ -23,14 +23,15 @@ const domStringFive = (weather) => {
 
   for (let i = 0; i < fivedayList.length; i += 8) {
 
-    strang += `<div id="myweather" class="col-sm-6 col-md-4">`;
+    strang += `<div id="weather" class="col-sm-6 col-md-4">`;
     strang += `<div  class="thumbnail">`;
     strang += `<div class="caption">`;
-    strang += `<h3>Temp: ${fivedayList[i].main.temp} &#8457</h3>`;
-    strang += `<p>Condition: ${fivedayList[i].weather[0].description}</p>`;
-    strang += `<p>Pressure: ${fivedayList[i].main.pressure} cm</p>`;
-    strang += `<p>Wind Speed: ${fivedayList[i].wind.speed} mph</p>`;
-    strang += `<p>Date & Time: ${fivedayList[i].dt_txt}</p>`;
+    strang += `<h3 class="temp">Temp: ${fivedayList[i].main.temp} &#8457</h3>`;
+    strang += `<p class="cond">Condition: ${fivedayList[i].weather[0].description}</p>`;
+    strang += `<p class="press">Pressure: ${fivedayList[i].main.pressure} cm</p>`;
+    strang += `<p class="wind">Wind Speed: ${fivedayList[i].wind.speed} mph</p>`;
+    strang += `<p class="date">Date & Time: ${fivedayList[i].dt_txt}</p>`;
+    strang += `<p><a class="btn btn-default addWeatherToWishlist" role="button">Save</a></p>`;
     strang += `</div>`;
     strang += `</div>`;
     strang += `</div>`;
