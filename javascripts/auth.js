@@ -1,4 +1,4 @@
-//  const { getAllMoviesEvent, } = require('./events');
+const events = require('./events');
 const { setUID, } = require('./firebaseApi');
 
 const checkLoginStatus = () => {
@@ -7,13 +7,15 @@ const checkLoginStatus = () => {
       setUID(user.uid);
       $('#searchDiv').removeClass('hide');
       // $('#search').addClass('hide');
+      $('#myWeather').removeClass('hide');
       $('#authScreen').addClass('hide');
       $('#mine, #navSearch, #logout').removeClass('hide');
       $('#authenticate').addClass('hide');
-      // getAllMoviesEvent();
+      events.getAllWeatherEvent();
     } else {
       $('#searchDiv').addClass('hide');
       // $('#search').addClass('hide');
+      $('#myWeather').addClass('hide');
       $('#authScreen').removeClass('hide');
       $('#mine, #navSearch, #logout').addClass('hide');
       $('#authenticate').removeClass('hide');

@@ -2,6 +2,7 @@
 
 const firebaseApi = require('./firebaseApi');
 const weather = require('./weather');
+const dom = require('./dom');
 
 const pressEnter = () => {
   // big old keypress event
@@ -16,7 +17,7 @@ const pressEnter = () => {
 };
 
 const clickCard = () => {
-  $('body').on('click', '#myweather', () => {
+  $(document).on('click','#saveFiveButton', () => {
     weather.showFiveCast();
   });
 };
@@ -24,9 +25,19 @@ const clickCard = () => {
 const submitButton = () => {
   $('#submit').on('click', () => {
     weather.showResults();
-    clickCard();
+
   });
 
+};
+
+const getAllWeatherEvent = () => {
+  firebaseApi.getAllWeather()
+    .then((weatherArray) => {
+      dom.domStringFive(weatherArray);
+    })
+    .catch((error) => {
+      console.error('error in get all weather', error);
+    });
 };
 
 const saveWeatherToWishlistEvent = () => {
@@ -35,8 +46,9 @@ const saveWeatherToWishlistEvent = () => {
     const weatherToAdd = {
       temperature: weatherToAddCard.find('.temp').text(),
       condition: weatherToAddCard.find('.cond').text(),
-      wind: weatherToAddCard.find('wind').text(),
+      wind: weatherToAddCard.find('.wind').text(),
     };
+    // firebaseApi.saveWeatherToWishlist(weatherToAdd)
     firebaseApi.saveWeatherToWishlist(weatherToAdd)
       .then(() => {
         weatherToAddCard.remove();
@@ -44,8 +56,64 @@ const saveWeatherToWishlistEvent = () => {
       .catch((error) => {
         console.error('error in saving weather', error);
       });
+
   });
 };
+
+const deleteWeatherFromFirebase = () => {
+  $(document).on('click', '.deleteWeatherFromCollectionEvent', (e) => {
+    const weatherToDeleteId = $(e.target).closest('.deletable').data('firebaseId');
+    firebaseApi.deleteWeatherFromDb(weatherToDeleteId)
+      .then(() => {
+        getAllWeatherEvent();
+      })
+      .catch((error) => {
+        console.error('error from delete movie', error);
+      });
+  });
+};
+
+// const saveWeatherToWishlistEvent = () => {
+//   $(document).on('click', '.addWeatherToWishlist', (e) => {
+//     const weatherToAddCard = $(e.target).closest('.weather');
+//     const weatherToAdd = {
+//       temperature: weatherToAddCard.find('.temp').text(),
+//       condition: weatherToAddCard.find('.cond').text(),
+//       wind: weatherToAddCard.find('.wind').text(),
+//     };
+//     firebaseApi.saveWeatherToWishlist(weatherToAdd)
+//       .then(() => {
+//         weatherToAddCard.remove();
+//       })
+//       .catch((error) => {
+//         console.error('error in saving weather', error);
+//       });
+
+//   });
+// };
+
+const getFavlistWeatherEvent = () => {
+  console.log('ssss');
+  firebaseApi.getSavedWeather()
+    .then((weatherArray) => {
+      dom.savedomString(weatherArray);
+      console.log(weatherArray);
+    })
+    .catch((error) => {
+      console.error('error in get weather', error);
+    });
+};
+
+const clickFavButton = () => {
+  $('#savedList-button').on('click', () => {
+    getFavlistWeatherEvent();
+  });
+
+};
+
+// $('body').on('click', '#savedList-button', () => {
+//   getFavlistWeatherEvent();
+// });
 
 const authEvents = () => {
   $('#signin-btn').click((e) => {
@@ -104,8 +172,11 @@ const authEvents = () => {
 const initializer = () => {
   pressEnter();
   submitButton();
+  clickCard();
   saveWeatherToWishlistEvent();
+  clickFavButton();
   authEvents();
+  deleteWeatherFromFirebase();
 
 };
 
